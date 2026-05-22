@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GST Billing – Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="dashboard.css" rel="stylesheet"/>
+</head>
+<body>
+
+<aside id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon"><i class="bi bi-receipt-cutoff"></i></div>
+    <span>GST BILLING</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Main Menu</div>
+    <ul class="list-unstyled">
+      <li class="nav-item">
+        <a href="dashboard.html" class="nav-link active" id="nav-dashboard">
+          <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="invoice.html" class="nav-link" id="nav-invoice">
+          <i class="bi bi-file-earmark-plus"></i> Create Invoice
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="products.html" class="nav-link" id="nav-products">
+          <i class="bi bi-box-seam"></i> Products
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="reports.html" class="nav-link" id="nav-reports">
+          <i class="bi bi-bar-chart-line"></i> Reports
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="#" class="nav-link" id="logout-btn">
+      <i class="bi bi-box-arrow-left"></i> Logout
+    </a>
+  </div>
+</aside>
+
+<div id="main">
+  <header id="topbar">
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-link p-0 d-md-none" id="sidebar-toggle" style="color:#1a2540;font-size:22px;">
+        <i class="bi bi-list"></i>
+      </button>
+      <div class="topbar-left">
+        <h5>Welcome back, Admin 👋</h5>
+        <p>Here's what's happening with your business today.</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-date">
+        <i class="bi bi-calendar3"></i>
+        <span id="today-date"></span>
+      </div>
+      <div class="avatar" title="Admin">A</div>
+    </div>
+  </header>
+
+  <div class="page-body">
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-xl-3">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="bi bi-file-earmark-text"></i></div>
+          <div class="stat-info">
+            <div class="label">Total Invoices</div>
+            <div class="value counter" data-target="24">0</div>
+            <div class="trend up"><i class="bi bi-arrow-up-short"></i>12% this month</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-xl-3">
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="bi bi-currency-rupee"></i></div>
+          <div class="stat-info">
+            <div class="label">Total Sales (₹)</div>
+            <div class="value">₹<span class="counter" data-target="45680">0</span></div>
+            <div class="trend up"><i class="bi bi-arrow-up-short"></i>8% this month</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-xl-3">
+        <div class="stat-card">
+          <div class="stat-icon orange"><i class="bi bi-percent"></i></div>
+          <div class="stat-info">
+            <div class="label">CGST Collected (₹)</div>
+            <div class="value">₹<span class="counter" data-target="2284">0</span></div>
+            <div class="trend up"><i class="bi bi-arrow-up-short"></i>5% this month</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-xl-3">
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="bi bi-percent"></i></div>
+          <div class="stat-info">
+            <div class="label">SGST Collected (₹)</div>
+            <div class="value">₹<span class="counter" data-target="2284">0</span></div>
+            <div class="trend up"><i class="bi bi-arrow-up-short"></i>5% this month</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-12 col-xl-7">
+        <div class="section-card h-100">
+          <div class="section-header">
+            <h6><i class="bi bi-clock-history me-2 text-primary"></i>Recent Invoices</h6>
+            <button class="btn-accent" id="view-all-btn">View All</button>
+          </div>
+          <div class="table-responsive">
+            <table class="table" id="invoices-table">
+              <thead>
+                <tr>
+                  <th>Invoice No.</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Amount (₹)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-xl-5 d-flex flex-column gap-3">
+        <div class="section-card">
+          <div class="section-header">
+            <h6><i class="bi bi-pie-chart me-2 text-primary"></i>GST Breakdown</h6>
+            <span class="badge bg-primary bg-opacity-10 text-primary" style="font-size:11px;font-weight:600;">May 2024</span>
+          </div>
+          <div class="gst-bar-wrap">
+            <div class="gst-row">
+              <div>
+                <div class="gst-label">Taxable Amount</div>
+                <div class="gst-progress" style="width:160px"><div class="gst-fill" style="width:0%;background:#0368ff" data-pct="82"></div></div>
+              </div>
+              <div class="gst-val">₹41,112</div>
+            </div>
+            <div class="gst-row">
+              <div>
+                <div class="gst-label">CGST (9% avg)</div>
+                <div class="gst-progress" style="width:160px"><div class="gst-fill" style="width:0%;background:#10b981" data-pct="50"></div></div>
+              </div>
+              <div class="gst-val">₹2,284</div>
+            </div>
+            <div class="gst-row">
+              <div>
+                <div class="gst-label">SGST (9% avg)</div>
+                <div class="gst-progress" style="width:160px"><div class="gst-fill" style="width:0%;background:#8b5cf6" data-pct="50"></div></div>
+              </div>
+              <div class="gst-val">₹2,284</div>
+            </div>
+            <div class="gst-row">
+              <div>
+                <div class="gst-label">Total Tax</div>
+                <div class="gst-progress" style="width:160px"><div class="gst-fill" style="width:0%;background:#f59e0b" data-pct="100"></div></div>
+              </div>
+              <div class="gst-val text-warning">₹4,568</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-header">
+            <h6><i class="bi bi-lightning me-2 text-primary"></i>Quick Actions</h6>
+          </div>
+          <div class="p-3">
+            <div class="row g-2">
+              <div class="col-6">
+                <a href="invoice.html" class="quick-card">
+                  <div class="qc-icon" style="background:rgba(3,104,255,.1);color:#0368ff"><i class="bi bi-file-earmark-plus"></i></div>
+                  <h6>New Invoice</h6>
+                  <p>Create a GST invoice</p>
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="products.html" class="quick-card">
+                  <div class="qc-icon" style="background:rgba(16,185,129,.1);color:#10b981"><i class="bi bi-box-seam"></i></div>
+                  <h6>Add Product</h6>
+                  <p>Manage your catalogue</p>
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="reports.html" class="quick-card">
+                  <div class="qc-icon" style="background:rgba(245,158,11,.1);color:#f59e0b"><i class="bi bi-bar-chart-line"></i></div>
+                  <h6>Reports</h6>
+                  <p>View sales report</p>
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="#" class="quick-card" id="print-demo">
+                  <div class="qc-icon" style="background:rgba(139,92,246,.1);color:#8b5cf6"><i class="bi bi-printer"></i></div>
+                  <h6>Print Invoice</h6>
+                  <p>Download / print PDF</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-12 col-md-4">
+        <div class="section-card">
+          <div class="section-header">
+            <h6><i class="bi bi-check-circle me-2 text-success"></i>Paid Invoices</h6>
+          </div>
+          <div class="p-4 text-center">
+            <div style="font-size:36px;font-weight:800;color:#10b981;" class="counter" data-target="3">0</div>
+            <div style="font-size:13px;color:var(--text-muted)">out of 4 invoices</div>
+            <div style="font-size:20px;font-weight:700;margin-top:8px;">₹<span class="counter" data-target="11800">0</span></div>
+            <div style="font-size:11.5px;color:var(--text-muted)">Total received</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="section-card">
+          <div class="section-header">
+            <h6><i class="bi bi-x-circle me-2 text-danger"></i>Unpaid Invoices</h6>
+          </div>
+          <div class="p-4 text-center">
+            <div style="font-size:36px;font-weight:800;color:#ef4444;" class="counter" data-target="1">0</div>
+            <div style="font-size:13px;color:var(--text-muted)">pending payment</div>
+            <div style="font-size:20px;font-weight:700;margin-top:8px;">₹<span class="counter" data-target="1180">0</span></div>
+            <div style="font-size:11.5px;color:var(--text-muted)">Pending amount</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="section-card">
+          <div class="section-header">
+            <h6><i class="bi bi-graph-up me-2 text-primary"></i>Top Customer</h6>
+          </div>
+          <div class="p-4 text-center">
+            <div style="width:52px;height:52px;background:var(--accent-soft);border-radius:50%;display:grid;place-items:center;margin:0 auto 10px;font-size:22px;color:var(--accent)"><i class="bi bi-person-circle"></i></div>
+            <div style="font-size:15px;font-weight:700;">Sharma Enterprises</div>
+            <div style="font-size:12px;color:var(--text-muted);">Highest value customer</div>
+            <div style="font-size:20px;font-weight:700;color:var(--accent);margin-top:8px;">₹5,900</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-wrap"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
